@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TripActivity"></activity>
-        <activity android:name=".New_Trip_Activity"></activity>
+        <activity android:name=".TripActivity" />
+        <activity android:name=".New_Trip_Activity" />
+        <activity android:name=".Settings" />
     </application>
 
 </manifest>

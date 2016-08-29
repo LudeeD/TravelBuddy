@@ -56,7 +56,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addContact(Trip trip){
+    public void addTrip(Trip trip){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TRIP_NAME, trip.getDest()); // Trip Destination
@@ -71,6 +71,29 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT id,trip,date,items FROM trip_table WHERE id="+id, null);
         String dest="Error";
+        String date="Error";
+        String items="Error";
+        if(c.moveToFirst()){
+            do{
+                //assing values
+                dest = c.getString(1);
+                date = c.getString(2);
+                items = c.getString(3);
+                //Do something Here with values
+
+            }while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+
+        //Trip trip = new Trip(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3));
+        return new Trip(id,dest,date,items);
+    }
+
+    public Trip getTrip(String dest){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("Select * FROM trip_table WHERE trip="+dest,null);
+        int id = 0;
         String date="Error";
         String items="Error";
         if(c.moveToFirst()){
@@ -129,5 +152,22 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_TRIPS, KEY_ID + " = ?",
                 new String[] { String.valueOf(t.getId()) });
         db.close();
+    }
+
+    public int getLastID(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT id FROM trip_table WHERE id=(SELECT MAX(id) FROM trip_table)", null);
+        int id = 69;
+        if(c.moveToFirst()){
+            do{
+                //assing values
+                id = Integer.parseInt(c.getString(0));
+
+            }while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        Log.d("AAAAAAAAAAAAAAAAAAAA",""+id);
+        return id;
     }
 }
