@@ -1,5 +1,6 @@
 package com.ludee.travelbuddy;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public class New_Trip_Activity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newt_trip);
+
         Button bt = (Button) findViewById(R.id.saveInfo);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override

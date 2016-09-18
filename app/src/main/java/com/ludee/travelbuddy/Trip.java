@@ -8,33 +8,35 @@ import java.util.ArrayList;
  * Created by ludee on 27-08-2016.
  */
 public class Trip {
-    private int id;
+    private long id;
     private String dest;
     private String date;
     private ArrayList<Item> items;
 
 
-    Trip(int id, String dst, String dt){
+    Trip(long id, String dst, String dt){
         this.id = id;
         this.dest = dst;
         this.date = dt;
         items = new ArrayList<>();
     }
 
-    Trip(int id, String dst, String dt, String i){
+    Trip(long id, String dst, String dt, String i){
         this.id = id;
         this.dest = dst;
         this.date = dt;
         items = new ArrayList<>();
-        if(i.contains("Error")){
-            this.items.add(new Item("Empty"));
+        if(i.startsWith("e")){
+            Log.d("Items","Empty");
         }else {
-            String[] items = i.split("_");
+            String[] items = i.split("-");
 
             for (int j = 0; j < items.length; j++) {
-                String[] it_name_check = items[j].split("-");
-                Item madik = new Item(it_name_check[0]);
-
+                boolean c;
+                String[] it_name_check = items[j].split("_");
+                if(it_name_check[1].startsWith("f")) c = false;
+                else c = true;
+                Item madik = new Item(it_name_check[0],c);
                 this.items.add(madik);
             }
         }
@@ -42,12 +44,15 @@ public class Trip {
 
     @Override
     public String toString(){
-        return ""+id+". "+this.dest+" ("+this.date+")";
+        return ""+id+". "+this.dest+" ("+this.date+")"+getItems_string();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
+
+    public void setDest(String d) {this.dest = d;}
+    public void setDate(String d) {this.dest = d;}
 
     public String getDest() {
         return dest;
@@ -57,14 +62,26 @@ public class Trip {
         return date;
     }
 
-    public String getItems() {
+    public String getItems_string() {
         String r="";
-        if(items.size()==0)
-            return r = "e";
+        if(items.size()==0) return r = "e";
+
         for (int i = 0; i<items.size();i++) {
             r = r + items.get(i).getName() + "_" + items.get(i).getCheckStatus() + "-";
         }
         return r;
+    }
+
+    public ArrayList<Item> getItems_items(){
+        return this.items;
+    }
+
+    public void updateItems(ArrayList<Item> items){
+        this.items = items;
+    }
+
+    public void addItem(Item i){
+        this.items.add(i);
     }
 }
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Trip> allTrips = new ArrayList<>();
     boolean changes = true;
     DataBaseHandler db = new DataBaseHandler(this);
-    private int numberOfTrips = -1;
-
+    private long numberOfTrips;
+    private SwipeRefreshLayout srl;
+    Trip t1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
@@ -39,17 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*Log.d("Insert:", "Inserting ..");
-        numberOfTrips++;
-        db.addContact(new Trip(numberOfTrips,"Porto","23/01/2015"));
-        numberOfTrips++;
-        db.addContact(new Trip(numberOfTrips,"Aveiro","aad"));
-        ArrayList<Trip> tripList = db.getTrips();
-        for (Trip t:tripList) {
-            Log.d("Id->",""+t.getId());
-            Log.d("Dest->",t.getDest());
-            db.deleteTrip(t);
-        }*/
+        numberOfTrips = db.getLastId();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,10 +52,22 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        srl = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        srl.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout");
+                        updateUI();
+                    }
+                }
+        );
         updateUI();
+
     }
 
     private void updateUI(){
+        Log.d("Updating","...");
         allTrips = new ArrayList<>();
         for (Trip t:db.getTrips()) {
             allTrips.add(t);
@@ -81,6 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(view.getContext(),TripEdit.class);
+                String selected = ((TextView) view.findViewById(R.id.tv_dest)).getText().toString();
+                Log.d("dest",selected);
+                intent.putExtra("dest",selected);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        srl.setRefreshing(false);
     }
 
 
@@ -88,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-
+        updateUI();
         if(requestCode==1){
             String dest = data.getStringExtra("dest");
             String date = data.getStringExtra("date");
@@ -96,11 +113,6 @@ public class MainActivity extends AppCompatActivity {
             Trip t =  new Trip(numberOfTrips,dest,date);
             allTrips.add(t);
             db.addTrip(t);
-            updateUI();
-        }
-
-        if(requestCode==2){
-            updateUI();
         }
     }
     @Override

@@ -9,8 +9,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Destino"
         android:id="@+id/dst_picker"
-        android:layout_gravity="center_horizontal"
-        android:padding="10pt" />
+        android:padding="10pt"
+        android:layout_gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,19 +32,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Data"
             android:id="@+id/dt_picker"
+            android:padding="10pt"
             android:layout_below="@+id/editText"
-            android:layout_centerHorizontal="true"
-            android:padding="10pt" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:layout_below="@+id/dt_picker"
-            android:layout_centerHorizontal="true"
-            android:padding="10pt" />
+            android:layout_alignRight="@+id/saveInfo"
+            android:layout_alignEnd="@+id/saveInfo" />
 
         <Button
             android:layout_width="wrap_content"
@@ -54,6 +45,15 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="54dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:layout_below="@+id/dt_picker"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 </LinearLayout>

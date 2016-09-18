@@ -27,5 +27,10 @@ public class TripActivity extends AppCompatActivity{
         tv.setText(t.getDest());
         tv = (TextView) findViewById(R.id.textView_date);
         tv.setText(t.getDate());
+        ArrayList<Item> items = t.getItems_items();
+
+
+
+
     }
 }
