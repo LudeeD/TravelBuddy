@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 String selected = ((TextView) view.findViewById(R.id.tv_dest)).getText().toString();
                 Log.d("dest",selected);
                 intent.putExtra("dest",selected);
-                startActivity(intent);
+                startActivityForResult(intent,3);
                 return true;
             }
         });

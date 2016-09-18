@@ -67,6 +67,7 @@ public class TripEdit extends AppCompatActivity {
 
         });
 
+
         srl = (SwipeRefreshLayout) findViewById(R.id.swiperefresh_item);
         srl.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,6 +84,13 @@ public class TripEdit extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent comeback = new Intent();
+        setResult(3,comeback);
+        finish();
+    }
+
     private void updateUi(){
         Log.d("Updating","Trip_Edit");
         items = new ArrayList<Item>();
@@ -95,9 +103,31 @@ public class TripEdit extends AppCompatActivity {
         items = t.getItems_items();
         Log.d("Items",t.getItems_string());
 
-        ItemListAdapter adapter = new ItemListAdapter(this,R.layout.list_items_layout,items.toArray(new Item[items.size()]));
+        ItemEditListAdapter adapter = new ItemEditListAdapter(this,R.layout.list_items_edit_layout,items.toArray(new Item[items.size()]));
         ListView listView = (ListView) findViewById(R.id.listView_items);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(view.getContext(),TripEdit.class);
+                String selected = ((TextView) view.findViewById(R.id.item_del)).getText().toString();
+                Item lol = null;
+                for (Item it : items) {
+                    if(it.getName()==selected){
+                        lol = it;
+                        break;
+                    }
+                }
+
+                items.remove(lol);
+                t.updateItems(items);
+                db.updateTrip(t);
+                intent.putExtra("dest",t.getDest());
+                startActivity(intent);
+                finish();
+            }
+        });
         srl.setRefreshing(false);
     }
+
 }

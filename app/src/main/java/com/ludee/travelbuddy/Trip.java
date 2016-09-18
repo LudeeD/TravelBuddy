@@ -108,6 +108,8 @@ class Item{
         else this.check = true;
     }
 
+    public Item getItem(){return this;}
+
     public String getName() {
         return this.name;
     }

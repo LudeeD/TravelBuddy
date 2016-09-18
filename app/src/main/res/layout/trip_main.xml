@@ -16,10 +16,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/textView_dest"
+            android:padding="5pt"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:padding="5pt" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,17 +28,36 @@
             android:text="Medium Text"
             android:id="@+id/textView_date"
             android:padding="5pt"
-            android:layout_alignBottom="@+id/textView_dest"
+            android:layout_above="@+id/swiperefresh_item"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swiperefresh_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView_dest"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="15px"
+            android:paddingTop="20px"
+            android:paddingRight="15px"
+            android:paddingBottom="5px">
+
+
+
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listView2"
-            android:layout_below="@+id/textView_dest"
-            android:layout_centerHorizontal="true"
-            tools:listitem="@android:layout/simple_list_item_checked" />
+            tools:listitem="@android:layout/simple_list_item_checked"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 

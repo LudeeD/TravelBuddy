@@ -43,15 +43,15 @@
 
 
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView_items"
-        tools:listitem="@android:layout/simple_list_item_checked"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_dest_edit" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView_items"
+            tools:listitem="@android:layout/simple_list_item_checked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView_dest_edit" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
