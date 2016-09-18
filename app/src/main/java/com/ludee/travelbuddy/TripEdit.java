@@ -51,6 +51,7 @@ public class TripEdit extends AppCompatActivity {
                         items.add(new Item(new_item));
                         t.updateItems(items);
                         Log.d("Result.>",""+db.updateTrip(t));
+                        updateUi();
                     }
                 });
 
@@ -86,6 +87,8 @@ public class TripEdit extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        t.updateItems(items);
+        db.updateTrip(t);
         Intent comeback = new Intent();
         setResult(3,comeback);
         finish();

@@ -46,6 +46,15 @@ public class TripActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    public void onBackPressed() {
+        t.updateItems(items);
+        db.updateTrip(t);
+        Intent comeback = new Intent();
+        setResult(2,comeback);
+        finish();
+    }
+
     private void updateUi(){
         Log.d("Updating","Trip_Edit");
         items = new ArrayList<Item>();

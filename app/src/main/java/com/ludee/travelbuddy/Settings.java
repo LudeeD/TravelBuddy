@@ -22,6 +22,7 @@ public class Settings extends AppCompatActivity {
                 for (Trip t:db.getTrips()) {
                     db.deleteTrip(t);
                 }
+                finish();
             }
         });
 
@@ -32,6 +33,7 @@ public class Settings extends AppCompatActivity {
                 for (Trip t:db.getTrips()) {
                     Log.d("AAAAAAAAAAAAAA",t.toString());
                 }
+                finish();
             }
         });
     }

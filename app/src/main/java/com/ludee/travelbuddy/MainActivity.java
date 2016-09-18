@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 String selected = ((TextView) view.findViewById(R.id.tv_dest)).getText().toString();
                 Log.d("dest",selected);
                 intent.putExtra("dest",selected);
-                startActivity(intent);
+                startActivityForResult(intent,2);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        updateUI();
+
         if(requestCode==1){
             String dest = data.getStringExtra("dest");
             String date = data.getStringExtra("date");
@@ -113,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
             Trip t =  new Trip(numberOfTrips,dest,date);
             allTrips.add(t);
             db.addTrip(t);
+
         }
+
+        updateUI();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
