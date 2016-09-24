@@ -8,3 +8,5 @@ But kind of works... So... I'm kind of happy with it.
 **To Do:**
 + Refactor all the code
 + Improve Interface
+
+(See the latest release if you wanna give it a try)
