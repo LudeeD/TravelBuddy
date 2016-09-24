@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,9 +38,9 @@ public class TripActivity extends AppCompatActivity{
             public void onClick(View view) {
                 final EditText edittext = new EditText(view.getContext());
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Novo Item");
+                builder.setTitle("Add Item");
                 builder.setView(edittext);
-                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String new_item = edittext.getText().toString();
                         items.add(new Item(new_item));
@@ -51,7 +50,7 @@ public class TripActivity extends AppCompatActivity{
                     }
                 });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Log.d("Item","Canceled");
                     }

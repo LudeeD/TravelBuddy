@@ -1,26 +1,15 @@
 package com.ludee.travelbuddy;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,8 +20,7 @@ public class MainActivity extends AppCompatActivity {
     boolean changes = true;
     DataBaseHandler db = new DataBaseHandler(this);
     private long numberOfTrips;
-    private SwipeRefreshLayout srl;
-    Trip t1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
@@ -52,22 +40,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        srl = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
-        srl.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout");
-                        updateUI();
-                    }
-                }
-        );
         updateUI();
 
     }
 
     private void updateUI(){
-        Log.d("Updating","...");
         allTrips = new ArrayList<>();
         for (Trip t:db.getTrips()) {
             allTrips.add(t);
@@ -96,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        srl.setRefreshing(false);
     }
 
 

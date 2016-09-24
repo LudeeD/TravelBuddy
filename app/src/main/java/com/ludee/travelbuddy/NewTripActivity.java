@@ -27,9 +27,16 @@ public class NewTripActivity extends AppCompatActivity{
                 Intent comeback = new Intent();
                 comeback.putExtra("dest",dest);
                 comeback.putExtra("date",date);
-                setResult(2,comeback);
+                setResult(1,comeback);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

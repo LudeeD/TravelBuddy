@@ -6,35 +6,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="id"
-            android:id="@+id/tv_id"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:padding="5pt" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Destino"
             android:id="@+id/tv_dest"
+            android:padding="5pt"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/tv_id"
-            android:layout_toEndOf="@+id/tv_id"
-            android:padding="5pt" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="data"
             android:id="@+id/tv_date"
+            android:padding="5pt"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:padding="5pt" />
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

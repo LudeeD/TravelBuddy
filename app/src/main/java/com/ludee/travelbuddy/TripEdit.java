@@ -4,14 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,8 +41,8 @@ public class TripEdit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Remover Viagem");
-                builder.setPositiveButton("Remover", new DialogInterface.OnClickListener() {
+                builder.setTitle("Remove Trip");
+                builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         db.deleteTrip(t);
                         Intent comeback = new Intent();
@@ -54,7 +51,7 @@ public class TripEdit extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Log.d("Item","Canceled");
                     }
@@ -92,9 +89,9 @@ public class TripEdit extends AppCompatActivity {
             public void onClick(View view) {
                 final EditText edittext = new EditText(view.getContext());
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Novo Nome");
+                builder.setTitle("New Name");
                 builder.setView(edittext);
-                builder.setPositiveButton("Concluir", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String new_name = edittext.getText().toString();
                         t.setDest(new_name);
@@ -103,9 +100,10 @@ public class TripEdit extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Log.d("Item","Canceled");
+                        updateUi();
                     }
                 });
 

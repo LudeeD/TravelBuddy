@@ -35,7 +35,6 @@ public class TripListAdapter extends ArrayAdapter<Trip> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new TripHolder();
-            holder.id = (TextView) row.findViewById(R.id.tv_id);
             holder.dest = (TextView) row.findViewById(R.id.tv_dest);
             holder.date = (TextView) row.findViewById(R.id.tv_date);
 
@@ -47,7 +46,6 @@ public class TripListAdapter extends ArrayAdapter<Trip> {
         }
 
         Trip trip = data[position];
-        holder.id.setText(""+trip.getId());
         holder.dest.setText(trip.getDest());
         holder.date.setText(trip.getDate());
 
@@ -56,7 +54,6 @@ public class TripListAdapter extends ArrayAdapter<Trip> {
 
     static class TripHolder
     {
-        TextView id;
         TextView dest;
         TextView date;
     }

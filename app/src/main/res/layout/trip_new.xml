@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Destino"
+        android:text="Destination"
         android:id="@+id/dst_picker"
         android:padding="10pt"
         android:layout_gravity="center_horizontal" />
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Data"
+            android:text="Date"
             android:id="@+id/dt_picker"
             android:padding="10pt"
             android:layout_below="@+id/editText"
@@ -40,11 +40,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text="Save"
             android:id="@+id/saveInfo"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="54dp" />
+            android:layout_marginBottom="54dp"
+            android:textColor="@color/icons"
+            />
 
         <EditText
             android:layout_width="wrap_content"
