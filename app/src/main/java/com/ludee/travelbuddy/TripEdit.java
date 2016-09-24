@@ -25,7 +25,6 @@ public class TripEdit extends AppCompatActivity {
     ArrayList<Item> items;
     DataBaseHandler db = new DataBaseHandler(this);
     Trip t;
-    private SwipeRefreshLayout srl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +36,21 @@ public class TripEdit extends AppCompatActivity {
         Log.d("Edit","Retrieving Trip");
         t = db.getTrip("\""+dest+"\"");
         Log.d("Trip_ITems",t.getItems_string());
+
+        updateUi();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_trip_edit);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText edittext = new EditText(view.getContext());
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Novo Item");
-                builder.setView(edittext);
-                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+                builder.setTitle("Remover Viagem");
+                builder.setPositiveButton("Remover", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String new_item = edittext.getText().toString();
-                        items.add(new Item(new_item));
-                        t.updateItems(items);
-                        Log.d("Result.>",""+db.updateTrip(t));
-                        updateUi();
+                        db.deleteTrip(t);
+                        Intent comeback = new Intent();
+                        setResult(3,comeback);
+                        finish();
                     }
                 });
 
@@ -68,21 +67,6 @@ public class TripEdit extends AppCompatActivity {
 
         });
 
-
-        srl = (SwipeRefreshLayout) findViewById(R.id.swiperefresh_item);
-        srl.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout items");
-                        updateUi();
-                        t.updateItems(items);
-                        db.updateTrip(t);
-                    }
-                }
-        );
-        updateUi();
-
     }
 
     @Override
@@ -94,29 +78,55 @@ public class TripEdit extends AppCompatActivity {
         finish();
     }
 
-    private void updateUi(){
-        Log.d("Updating","Trip_Edit");
+    private void updateUi() {
+        Log.d("Updating", "Trip_Edit");
         items = new ArrayList<Item>();
 
-        TextView tv = (TextView) findViewById(R.id.textView_dest_edit);
-        tv.setText(t.getDest());
-        tv = (TextView) findViewById(R.id.textView_date_edit);
-        tv.setText(t.getDate());
+        TextView tv1 = (TextView) findViewById(R.id.textView_dest_edit);
+        tv1.setText(t.getDest());
+        TextView tv2 = (TextView) findViewById(R.id.textView_date_edit);
+        tv2.setText(t.getDate());
+
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText edittext = new EditText(view.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Novo Nome");
+                builder.setView(edittext);
+                builder.setPositiveButton("Concluir", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String new_name = edittext.getText().toString();
+                        t.setDest(new_name);
+                        db.updateTrip(t);
+                        updateUi();
+                    }
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Log.d("Item","Canceled");
+                    }
+                });
+
+                builder.show();
+            }
+        });
 
         items = t.getItems_items();
-        Log.d("Items",t.getItems_string());
+        Log.d("Items", t.getItems_string());
 
-        ItemEditListAdapter adapter = new ItemEditListAdapter(this,R.layout.list_items_edit_layout,items.toArray(new Item[items.size()]));
+        ItemEditListAdapter adapter = new ItemEditListAdapter(this, R.layout.list_items_edit_layout, items.toArray(new Item[items.size()]));
         ListView listView = (ListView) findViewById(R.id.listView_items);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(view.getContext(),TripEdit.class);
+                Intent intent = new Intent(view.getContext(), TripEdit.class);
                 String selected = ((TextView) view.findViewById(R.id.item_del)).getText().toString();
                 Item lol = null;
                 for (Item it : items) {
-                    if(it.getName()==selected){
+                    if (it.getName() == selected) {
                         lol = it;
                         break;
                     }
@@ -125,12 +135,10 @@ public class TripEdit extends AppCompatActivity {
                 items.remove(lol);
                 t.updateItems(items);
                 db.updateTrip(t);
-                intent.putExtra("dest",t.getDest());
+                intent.putExtra("dest", t.getDest());
                 startActivity(intent);
                 finish();
             }
         });
-        srl.setRefreshing(false);
     }
-
 }

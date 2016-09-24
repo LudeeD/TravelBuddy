@@ -1,10 +1,15 @@
 package com.ludee.travelbuddy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,7 +23,6 @@ public class TripActivity extends AppCompatActivity{
     DataBaseHandler db = new DataBaseHandler(this);
     private ArrayList<Item> items;
     private Trip t;
-    private SwipeRefreshLayout srl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +33,36 @@ public class TripActivity extends AppCompatActivity{
         String dest = intent.getStringExtra("dest");
         t = db.getTrip("\""+dest+"\"");
 
-        srl = (SwipeRefreshLayout) findViewById(R.id.swiperefresh_item);
-        srl.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout items");
-                        updateUi();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_trip);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText edittext = new EditText(view.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Novo Item");
+                builder.setView(edittext);
+                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String new_item = edittext.getText().toString();
+                        items.add(new Item(new_item));
                         t.updateItems(items);
                         db.updateTrip(t);
+                        updateUi();
                     }
-                }
-        );
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Log.d("Item","Canceled");
+                    }
+                });
+
+                builder.show();
+
+
+            }
+
+        });
 
         updateUi();
 
@@ -70,6 +92,5 @@ public class TripActivity extends AppCompatActivity{
         ItemListAdapter adapter = new ItemListAdapter(this,R.layout.list_items_layout,items.toArray(new Item[items.size()]));
         ListView listView = (ListView) findViewById(R.id.listView2);
         listView.setAdapter(adapter);
-        srl.setRefreshing(false);
     }
 }

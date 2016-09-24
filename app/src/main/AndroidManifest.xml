@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TripActivity" />
-        <activity android:name=".New_Trip_Activity" />
+        <activity android:name=".NewTripActivity" />
         <activity android:name=".Settings" />
         <activity android:name=".TripEdit" />
     </application>
